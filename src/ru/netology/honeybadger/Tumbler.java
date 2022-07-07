@@ -3,6 +3,8 @@ package ru.netology.honeybadger;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Tumbler {
+    private final static int NUMBER_OF_MOVES = 7;
+    private final static int WAIT_PLAYER = 3000;
     private AtomicBoolean tumblerAtomicBoolean = new AtomicBoolean();
 
     public void makeChange(Boolean aBoolean) {
@@ -17,12 +19,12 @@ public class Tumbler {
         }
     }
 
-    public void moveUser(int numberOfMoves, int waitPlayer) {
+    public void moveUser() {
         int count = 0;
-        while (count < numberOfMoves) {
+        while (count < NUMBER_OF_MOVES) {
             if (!tumblerAtomicBoolean.get()) {
                 try {
-                    Thread.sleep(waitPlayer);
+                    Thread.sleep(WAIT_PLAYER);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

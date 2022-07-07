@@ -1,13 +1,10 @@
 package ru.netology.honeybadger;
 
 public class Main {
-    final static int NUMBER_OF_MOVES = 7;
-    final static int WAIT_PLAYER = 3000;
-
     public static void main(String[] args) throws InterruptedException {
 
         Tumbler tumbler = new Tumbler();
-        Thread threadPlayer = new Thread(null, () -> tumbler.moveUser(NUMBER_OF_MOVES, WAIT_PLAYER));
+        Thread threadPlayer = new Thread(null, () -> tumbler.moveUser());
         Thread threadToy = new Thread(null, () -> tumbler.checkTumbler());
 
         threadPlayer.setName("Поток-пользователь");
