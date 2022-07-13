@@ -1,19 +1,17 @@
 package ru.netology.honeybadger;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 public class Tumbler {
     private final static int NUMBER_OF_MOVES = 7;
     private final static int WAIT_PLAYER = 3000;
-    private AtomicBoolean tumblerAtomicBoolean = new AtomicBoolean();
+    private volatile boolean tumblerAtomicBoolean;
 
     public void makeChange(Boolean aBoolean) {
-        System.out.printf("%s взвел тумблер в положение %s\n", Thread.currentThread().getName(), !tumblerAtomicBoolean.getAndSet(aBoolean));
+        System.out.printf("%s взвел тумблер в положение %s\n", Thread.currentThread().getName(), tumblerAtomicBoolean=aBoolean);
     }
 
     public void checkTumbler() {
         while (!Thread.currentThread().isInterrupted()) {
-            if (tumblerAtomicBoolean.get()) {
+            if (tumblerAtomicBoolean) {
                 makeChange(false);
             }
         }
@@ -22,7 +20,7 @@ public class Tumbler {
     public void moveUser() {
         int count = 0;
         while (count < NUMBER_OF_MOVES) {
-            if (!tumblerAtomicBoolean.get()) {
+            if (!tumblerAtomicBoolean) {
                 try {
                     Thread.sleep(WAIT_PLAYER);
                 } catch (InterruptedException e) {
